@@ -1,0 +1,309 @@
+﻿<DOCTYPE html>
+<html manifest="index.appcache">
+<head>
+<title>NoteKeeper</title>
+<meta charset='utf-8'/>
+<meta name='format-detection' content='telephone=no' />
+<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1'/>
+
+<meta name='apple-mobile-web-app-cabable' content='YES'/>
+<meta name='version' content='1.00' />
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="jquerym.css">
+<link rel="stylesheet" href="listview-grid.css">
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquerym.js" type="text/javascript"></script>
+<script src="fastclick.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+<!-- testing WEINRE !-->
+<script src="http://localhost:8080/target/target-script-min.js#anonymous"></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNNoxp1Gd_87uFaq0oZaCDod9Nrrg-lE0&libraries=places">
+</script>
+ <!--Must include libraries=places, was before -> sensor=true ,api-key= AIzaSyDNNoxp1Gd_87uFaq0oZaCDod9Nrrg-lE0 !-->
+
+<!--[if IE]>
+<script src="html5.js" type="text/javascript"></script>
+<![endif]-->
+<script src="cordova.js" type="text/javascript"></script>
+<style>.ui-header .ui-title, .ui-footer .ui-title {margin-right: 0 !important; margin-left: 0 !important;}
+marker {max-width: 100%; max-height: 100%;}
+#map  {width: 100%; height:92vh;}
+.centerImg {
+	 display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+
+#pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+      .ui-input-text { margin:0px; }
+</style>
+
+</head>
+<body>
+<script>
+	$('#li-click-open').on('click', function() {	
+		var target = $(this).parent().children("#li-click-expand");
+			$(target).slideToggle();
+	});	
+</script>
+	<div id="pgMenu" data-role="page" data-theme="b" class="my-page">
+		<header id="pgMenuheader" data-role="header" data-position="fixed">
+			<h1>Travel Keeper</h1>
+		</header>
+		<div id="pgMenucontent" data-role="content" class="content">
+		<ul data-role="listview" data-inset="true" id="sbItems">
+			<li data-icon="false"><a data-transition="slide" id="sbNote" href="#pgNote">
+				<h2>Travels</h2>
+				<p>Maintain Notes</p>
+				<img height="200" width="100%" src="images/apps80.png" alt="Notes" class="ui-li-thumb"></img></a></li>
+			<li data-icon="false" ><a style="pointer-events: none; cursor: default;" data-transition="slide" id="" href="#">
+				<h2></h2>
+				<p></p>
+				</a></li>
+			<li data-icon="false"><a data-transition="slide" id="googleMap" href="#pgMap">
+				<h2>G-Maps</h2>
+				<p>Browse Area</p>
+				<img style="-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    			filter: grayscale(100%); margin-left: 5px"
+    			height="200" width="100%" src="images/gmap.png" alt="G-Maps" class="ui-li-thumb"></img></a></li>
+			<li data-icon="false"><a style="pointer-events: none; cursor: default;" data-transition="slide" id="" href="#">
+				<h2></h2>
+				<p></p>
+				</a></li>
+			<li data-icon="false"><a id="catchImg" >
+				<h2>Camera</h2>
+				<p>Store Image</p>
+				<img height="200" width="100%" src="images/camera.png" alt="Camera" class="ui-li-thumb"></img></a></li>
+			<li data-icon="false" ><a style="pointer-events: none; cursor: default;" data-transition="slide" id="" href="#">
+				<h2></h2>
+				<p></p>
+				</a></li>
+			<li data-icon="false"><a id="clearStorage" >
+				<h2>Clear</h2>
+				<p>LocalStorage</p>
+				<img height="200" width="100%" src="images/error.png" alt="Clear" class="ui-li-thumb"></img></a></li>
+		</ul>
+		</div>
+
+		<footer id="pgMenufooter" data-role="footer" data-position="fixed">
+			<h1>Footer</h1>
+		</footer>
+	</div>
+	<!--	LIST	!-->
+	<div id="pgNote" data-role="page">
+		<header id="pgNoteheader" data-role="header" data-position="fixed">
+			<h1>Destinations</h1>
+			<a data-role="button" id="pgNoteBack" data-icon="arrow-l" class="ui-btn-left">Back</a>
+			<a data-role="button" id="pgNoteNew" data-icon="plus" data-theme="b" class="ui-btn-right">New</a>
+		</header>
+		<div id="pgNotecontent" data-role="content" class="content">
+			<ul data-role="listview" data-inset="true" id="pgNoteList" data-autodividers="true" data-filter="true" data-filter-placeholder="Search Notes" data-filter-reveal="false">
+				<li data-role="list-divider">NoteHdr</li>
+				<li id="noNote">You have no notes</li>
+			</ul>
+			
+		</div>
+	</div>
+	<!--	LIST END	!-->
+	<!--	ADD NOTE	!-->
+	<div id="pgAddNote" data-role="page">
+		<header id="pgAddNoteheader" data-role="header" data-position="fixed">
+			<h1>Add Journey</h1>
+		<a data-role="button" id="pgAddNoteBack" data-icon="arrow-l" class="ui-btn-left">Back</a>
+		</header>
+		<div id="pgAddNotecontent" data-role="content" class="content">
+			<form action="#" method="post" id="pgAddNoteForm" name="pgAddNoteForm">
+			<div data-role="fieldcontain">
+			<label for="pgAddNoteTitle" id="lblpgAddNoteTitle">Title</label>
+			<input type="text" required="required" title="Destination" name="pgAddNoteTitle" id="pgAddNoteTitle" placeholder="Destination" autocomplete="off" data-clear-btn="true"></input>
+			</div>
+			<div data-role="fieldcontain">
+			<label for="pgAddNoteDetail" id="lblpgAddNoteDetail">Details</label>
+			<textarea name="pgAddNoteDetail" id="pgAddNoteDetail" placeholder="Enter details " data-clear-btn="true" required="required"></textarea>
+			</div>
+			<div data-role="fieldcontain" data-inline="true">
+				<label for="pgAddNoteDate" id="lblpgAddNoteDate">Date</label>
+				<input type="date"  title="Date" name="pgAddNoteDate" id="pgAddNoteDate"  width="40"></input>
+			</div>
+			<!--		For testing			-->
+			<div data-role="fieldcontain" style=" display: none ;">
+				<label for="pgImageURLDest" id="lblpgImageURLDest">File Path<span style='color:red;'>*</span></label>
+				<input name="pgAddImageURLDest" id="pgAddImageURLDest" placeholder="Camera" data-clear-btn="true" required="required"></input>
+			</div>
+			<p id="urlImg"></p>
+
+			<!--
+			<button class="iconImage" id="takePhotoCamera">
+				Set Icon (Camera)
+			</button>
+			-->
+			<div data-inline="true">
+				<a style="width: 35%;" href="#" id="takePhotoCamera" data-role="button" data-inline="true">Cam</a>
+
+				<a style="width: 35%;" href="#" id="takePhotoDrive" data-role="button" data-inline="true">Uri</a>
+			</div>
+
+			<div id="imageURLDest"></div> <!-- to get the string -->
+			<div><button type="submit" id="pgAddNoteSave" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Save Note</button>
+			</div>
+			</form>
+		</div>
+	</div>
+	<!--	ADD NOTE END	!-->
+	<!--	PREVIEW		!-->
+	<div data-url="Title" id="pgPreviewNote" data-role="page">
+		<header id="pgPreviewNoteheader" data-role="header" data-position="fixed">
+			<h1>Preview Note</h1>
+			<a data-role="button" id="pgPreviewNoteBack" data-icon="arrow-l" class="ui-btn-left">Back</a>
+			<a data-role="button" data-href="ID" id="pgPreviewNoteDelete" data-icon="delete" data-theme="b" class="ui-btn-right">Edit</a>
+		</header>
+		
+		<div id="pgPreviewNotecontent" data-role="content" class="center">
+			
+		</div>
+	</div>
+	<!--	PREVIEW	END	!-->
+
+	<!--	EDIT	!-->
+	<div data-url="Title" id="pgEditNote" data-role="page">
+		<header id="pgEditNoteheader" data-role="header" data-position="fixed">
+			<h1>Edit Note</h1>
+			<a data-role="button" id="pgEditNoteBack" data-icon="arrow-l" class="ui-btn-left">Back</a>
+			<a data-role="button" data-href="ID" id="pgEditNoteDelete" data-icon="delete" data-theme="b" class="ui-btn-right">Delete</a>
+		</header>
+		<div id="pgEditNotecontent" data-role="content" class="content">
+			<form action="#" method="post" id="pgEditNoteForm" name="pgEditNoteForm">
+			
+			<div style="visibility:hidden" data-role="fieldcontain">
+				<input name="pgEditNoteId" id="pgEditNoteId"></input>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="pgEditNoteTitle" id="lblpgEditNoteTitle">Title<span style='color:red;'>*</span></label>
+				<input readonly="readonly" data-clear-btn="true" autofocus="true" type="text" required="required" title="Enter title here." name="pgEditNoteTitle" id="pgEditNoteTitle" placeholder="Enter title here." autocomplete="off"></input>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="pgEditNoteDetail" id="lblpgEditNoteDetail">Details<span style='color:red;'>*</span></label>
+				<textarea name="pgEditNoteDetail" id="pgEditNoteDetail" placeholder="Enter details here." data-clear-btn="true" required="required"></textarea>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="pgEditNoteDate" id="lblpgEditNoteDate">Date<span style='color:red;'>*</span></label>
+				<input type="date" name="pgEditNoteDate" id="pgEditNoteDate" placeholder="Enter details here." data-clear-btn="true" required="required"></input>
+			</div>
+			<div data-role="fieldcontain" style=" display: none;">
+				<label for="pgImageURLDest" id="lblpgImageURLDest">File Path<span style='color:red;'>*</span></label>
+				<input name="pgEditImageURLDest" id="pgEditImageURLDest" placeholder="Url path." data-clear-btn="true" required="required"></input>
+			</div>
+			<div data-inline="true">
+				<a style="width: 35%;" href="#" id="takePhotoCamera2" data-role="button" data-inline="true">Cam</a>
+
+				<a style="width: 35%;" href="#" id="takePhotoDrive2" data-role="button" data-inline="true">Uri</a>
+			</div>
+			<!-- 
+			<button class="iconImage" id="takePhoto2">
+				Set Icon (Path)
+			</button>
+			-->
+
+			<div><button type="submit" id="pgEditNoteUpdate" class="ui-btn ui-corner-all ui-shadow ui-btn-b">Update Note</button>
+			</div>
+			</form>
+		</div>
+	</div>
+	<!--	EDIT END	!-->
+
+	<!--	MAP LOCATION	!-->
+	<div id="pgMap"  style="margin:0px;padding:0px;background-color: grey;" data-role="page">
+		<header id="pgNoteheader" data-role="header" data-position="fixed">
+			<h1>Position</h1>
+			<a data-role="button" id="pgNoteBackMap" data-icon="arrow-l" class="ui-btn-left">Back</a>
+		</header>
+		<div id="pgMapcontent" style="padding:0px;" data-role="content" class="content">
+			<input id="map-input" class="controls" type="text" placeholder="Search Box" style="margin:0px;">
+			<div id="map"></div>
+		</div>
+	</div>
+	<!--	MAP LOCATION END	!-->
+	<section data-transition="pop" id="msgbox" data-role="dialog">
+		<header id="msgboxheader" data-role="header" data-position="fixed">
+			<h1>Confirm</h1>f
+		</header>
+		<div id="msgboxcontent" data-role="content" class="content ui-content">
+			<div id="msgboxtitle">
+			</div>
+			<br><div id="msgboxprompt">
+			<p>Are you sure you want to delete this record?</p>
+			</div>
+			<br><div style="text-align: center;" id="msgboxbuttons" class="ui-grid-a">
+			<div class="ui-block-a">
+				<a data-method="" data-id="" data-topage="" id="msgboxyes" data-role="button" data-icon="check">Yes</a>
+			</div>
+			<div class="ui-block-b">
+				<a data-method="" data-id="" data-topage="" id="msgboxno" data-role="button" data-icon="delete" data-theme="b">No</a>
+			</div>
+			</div>
+		</div>
+	</section>
+	
+	<section data-transition="pop" id="alertbox" data-role="dialog">
+		<header id="alertboxheader" data-role="header" data-position="fixed">
+			<h1>Error</h1>
+		</header>
+		<div id="alertboxcontent" data-role="content" class="content">
+			<div id="alertboxtitle">
+			</div>
+			<br><div id="alertboxprompt">
+			<p>An error has been encountered!</p>
+			</div>
+			<br><div style="text-align: center;" id="alertboxbuttons" class="ui-grid-solo">
+			<div class="ui-block-a">
+			<a data-method="" data-id="" data-topage="" id="alertboxok" data-role="button" data-icon="check" data-theme="b">Ok</a>
+			</div>
+			</div>
+		</div>
+	</section>
+
+
+</body>
+</html>
+
+<!--	
+
+var NoteLi = '<li>' +
+			'<div style="width:50%;float:left;"><strong></strong><span style="visibility:;">ID</span><p>DETAIL</p></div>' +
+			'<div style="width:35%;float:left;"><a href="#pgPreviewNote?Title=LINK" id="pgPreviewDetails"><img src="images/error.png" width="100px" height="100px"/></a></div>'+
+			'<div style="width:15%;float:left;"><a href="#pgEditNote?Title=LINK" id="pgEditDetails">EDIT</a></div>' +
+			'</li>';
+		var NoteHdr = '<li data-role="list-divider">NoteHdr</li>';
+		var noNote = '<li id="noNote">You have no notes</li>';
+
+		var NotePre='<a href="#pgEditNote?Title=ID" id="pgEditDetails"><div><p>Edit</p></div>'+
+					'<div id="notePreText"></a>'+	
+			    		'<h3>DATE<br><br><span style="visibility:;">ID</span></h3>'+
+				    '</div>'+
+				    '<div  id="notePreImg"><img class="centerImg" src="images/error.png"/></div>'+
+					'<div  id="notePreDetails">'+
+				    	'<strong>Details:</strong> DETAIL<br><br><strong>Tasks:</strong>TASK<br>'+
+					'</div>';
+
+
+	!-->

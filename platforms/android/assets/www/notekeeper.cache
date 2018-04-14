@@ -1,0 +1,23 @@
+CACHE MANIFEST
+
+# Make files available offline
+CACHE
+index.html
+jquerym.css
+jquerymt.css
+jqm-datebox.css
+jquerymdp.css
+jquery.js
+jquerym.js
+jquerydp.js
+jqm-datebox.core.js
+jqm-datebox.mode.calbox.js
+jqm-datebox.mode.custombox.js
+jqm-datebox.mode.customflip.js
+jqm-datebox.mode.datebox.js
+jqm-datebox.mode.flipbox.js
+jqm-datebox.mode.slidebox.js
+cordova.js
+
+#These files require network connection
+NETWORK
