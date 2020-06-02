@@ -26,7 +26,8 @@
       "cordova-plugin-sqlite": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
