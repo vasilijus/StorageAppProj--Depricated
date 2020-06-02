@@ -487,7 +487,11 @@ $(function(){
 		console.log("Ln 436 -Title: " + NoteRec.Title + " " + NoteRec.Detail);
 		var html = '';
 
-		html += NotePre.replace(/LINK/g, NoteRec.Title).replace(/DATE/g, NoteRec.Date).replace(/images\/error.png/g, NoteRec.Image).replace(/DETAIL/g,NoteRec.Detail);
+		// console.log("data:image/png;base64,"NoteRec.Image, ); // Image type / Image byte code 
+		html += NotePre.replace(/LINK/g, NoteRec.Title)
+				.replace(/DATE/g, NoteRec.Date)
+				.replace(/images\/error.png/g, "data:image/png;base64," + NoteRec.Image)
+				.replace(/DETAIL/g,NoteRec.Detail);
 		
 		$('#pgPreviewNotecontent').html( html);
 	};
@@ -536,6 +540,7 @@ $(function(){
 		return NotesObj;
 	};
 
+	// Dashboard
 	app.displayNotes = function(){
 		// get Note records.
 		var NotesObj = app.getNotes();
@@ -546,9 +551,12 @@ $(function(){
 		// loop over notes
 		for (n in NotesObj){
 			var nLnk = n.replace(/-/g,' ');
-			html += NoteLi.replace(/ID/g, nLnk + 
-				" <p class='dateTime'>" + NotesObj[n].Date +
-				"</h3>").replace(/LINK/g,n).replace(/DETAIL/g,NotesObj[n].Detail).replace(/images\/error.png/g, NotesObj[n].Image) ;
+			html += NoteLi
+				.replace(/ID/g, nLnk + 
+				" <p class='dateTime'>" + NotesObj[n].Date + "</h3>")
+				.replace(/LINK/g,n)
+				.replace(/DETAIL/g,NotesObj[n].Detail)
+				.replace(/images\/error.png/g, "data:image/png;base64," +  NotesObj[n].Image) ;
 		}
 		$('#pgNoteList').html(NoteHdr + html ).listview('refresh');
 	};
