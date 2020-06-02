@@ -10,9 +10,9 @@ $(function(){
 	(function(app){
 
 		var NoteLi = '<li>' +
-			'<div style="width:50%;float:left;"><strong></strong><span style="visibility:;">ID</span><p>DETAIL</p></div>' +
-			'<div style="width:35%;float:left;"><a href="#pgPreviewNote?Title=LINK" id="pgPreviewDetails"><img src="images/error.png" width="100px" height="100px"/></a></div>'+
-			'<div style="width:15%;float:left;"><a href="#pgEditNote?Title=LINK" id="pgEditDetails">EDIT</a></div>' +
+			'<div><strong></strong><span style="visibility:;">ID</span><p>DETAIL</p></div>' +
+			'<div><a href="#pgPreviewNote?Title=LINK" id="pgPreviewDetails"><img src="images/error.png" width="100px" height="100px"/></a></div>'+
+			'<div><a href="#pgEditNote?Title=LINK" id="pgEditDetails">EDIT</a></div>' +
 			'</li>';
 		var NoteHdr = '<li data-role="list-divider">NoteHdr</li>';
 		var noNote = '<li id="noNote">You have no notes</li>';
