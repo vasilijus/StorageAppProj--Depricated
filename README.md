@@ -13,6 +13,8 @@ Such as:
 # Install
 ```
 npm install 
+
+cordova platform add browser
 ```
 
 
@@ -43,7 +45,7 @@ $ cordova platform
     ios ^5.0.0
     osx ^5.0.0
     windows ^7.0.0
-	
+
 ```
 
 ---
